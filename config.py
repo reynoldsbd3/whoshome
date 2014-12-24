@@ -19,7 +19,7 @@ local_net = '192.168.1.1/24'
 
 # Number of consecutive scans that a device must be absent from to be considered
 #   gone from the local network
-timeout = 5
+timeout = 8
 
 # Args to pass to nmap... shouldn't need to change these
 nmap_args = '-sn -n --host-timeout 4s'

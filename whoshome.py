@@ -35,3 +35,7 @@ ns.start()
 
 fio = FrameIO(ns)
 fio.start()
+
+# Keep main thread alive to catch signals
+while True:
+	sleep(1)
