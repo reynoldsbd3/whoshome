@@ -7,6 +7,7 @@
 
 import config
 #import RPi.GPIO as GPIO
+GPIO = 'foo'
 from threading import Thread
 from time import sleep
 
@@ -28,13 +29,6 @@ class FrameIO():
         self.thread = Thread(target = self.run)
         self.thread.deamon = True
 
-        # Set an event handler for the off button
-        self.lights = True
-        #GPIO.something(target = self.light_switch)
-
-        # Prepare GPIO pins for output
-        self.setup_pins()
-
     def run(self):
         """Update the light status"""
 
@@ -43,13 +37,22 @@ class FrameIO():
             self.update_colors()
             sleep(self.update_freq)
 
-    def light_switch(self):
-        """Toggle whether or not the lights should be lit"""
-        self.lights_on = False
+    def init_gpio(self):
+        """Initialize the GPIO pins"""
 
-    def setup_pins(self):
-        """Setup GPIO pins for input and output"""
-        pass
+        if self.gpio_mode == 'board':
+            GPIO.setmode(GPIO.BOARD)
+        elif self.gpio_mode == 'bcm':
+            GPIO.setmode(GPIO.BCM)
+
+        for color, pin in self.pin_bindings.items():
+            GPIO.setup(pin, GPIO.OUT)
+
+    def deinit_gpio(self):
+        """Make sure pins are off"""
+
+        for color, pin in self.pin_bindings.items():
+            GPIO.output(pin, False)
 
     def get_colors(self):
         """Update which colors should be lit based on networkscanner"""
@@ -67,7 +70,7 @@ class FrameIO():
         """Do the work of lighting the actual pins"""
 
         for color, lit in self.colors.items():
-            if lit and self.lights_on:
+            if lit:
                 print('lighting pin %s' % (self.pin_bindings[color]))
             else:
                 print('turning off pin %s' % (self.pin_bindings[color]))
@@ -79,3 +82,4 @@ class FrameIO():
     def stop(self):
         self.running = False
         self.thread.join()
+        deinit_gpio()
