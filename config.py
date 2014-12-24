@@ -19,7 +19,7 @@ local_net = '192.168.1.1/24'
 
 # Number of consecutive scans that a device must be absent from to be considered
 #   gone from the local network
-timeout = 10
+timeout = 3
 
 # Args to pass to nmap... shouldn't need to change these
 nmap_args = '-sn -n --host-timeout 4s'
@@ -27,9 +27,9 @@ nmap_args = '-sn -n --host-timeout 4s'
 # Colors and GPIO configuration. Also shouldn't change these unless you have a
 #   different hardware configuration. These should be of the form 'color' : pin
 colors = {'red' : 4,
-          'yellow' : 1,
-          'green' : 2,
-          'blue' : 24}
+          'yellow' : 17,
+          'green' : 27,
+          'blue' : 22}
 
 # Number of seconds between output updates
 update_freq = 3

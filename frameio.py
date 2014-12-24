@@ -56,6 +56,8 @@ class FrameIO():
         for color, pin in self.pin_bindings.items():
             GPIO.output(pin, False)
 
+        GPIO.cleanup()
+
     def get_colors(self):
         """Update which colors should be lit based on networkscanner"""
 
@@ -73,9 +75,9 @@ class FrameIO():
 
         for color, lit in self.colors.items():
             if lit:
-                GPIO.output(pin_bindings[color], True)
+                GPIO.output(self.pin_bindings[color], True)
             else:
-                GPIO.output(pin_bindings[color], False)
+                GPIO.output(self.pin_bindings[color], False)
 
     def start(self):
         self.running = True
