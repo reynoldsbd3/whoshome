@@ -10,23 +10,19 @@
 import config
 from frameio import FrameIO
 from networkscanner import NetworkScanner
+import signal
 from time import sleep
 
-def main():
+def kill_handler(signum, frame):
+    print("caught term or int")
+    fio.stop()
+    ns.stop()
 
-    ns = NetworkScanner()
-    ns.start()
+signal.signal(signal.SIGINT, kill_handler)
+signal.signal(signal.SIGTERM, kill_handler)
 
-    fio = FrameIO(ns)
-    fio.start()
+ns = NetworkScanner()
+ns.start()
 
-    while 1:
-        print('letting scanner do its thing')
-        sleep(5)
-        print('found this:')
-        for mac, active in ns.macs.items():
-            if active:
-                print('\tfound \'%s\'' % (mac))
-
-if __name__ == '__main__':
-    main()
+fio = FrameIO(ns)
+fio.start()

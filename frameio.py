@@ -29,6 +29,8 @@ class FrameIO():
         self.thread = Thread(target = self.run)
         self.thread.deamon = True
 
+        self.init_gpio()
+
     def run(self):
         """Update the light status"""
 
@@ -82,4 +84,4 @@ class FrameIO():
     def stop(self):
         self.running = False
         self.thread.join()
-        deinit_gpio()
+        self.deinit_gpio()
