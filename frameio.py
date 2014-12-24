@@ -29,7 +29,7 @@ class FrameIO():
         self.thread.deamon = True
 
         # Set an event handler for the off button
-        self.lights_on = True
+        self.lights = True
         #GPIO.something(target = self.light_switch)
 
         # Prepare GPIO pins for output
@@ -38,7 +38,7 @@ class FrameIO():
     def run(self):
         """Update the light status"""
 
-        while 1:
+        while self.running:
             self.get_colors()
             self.update_colors()
             sleep(self.update_freq)
@@ -73,4 +73,9 @@ class FrameIO():
                 print('turning off pin %s' % (self.pin_bindings[color]))
 
     def start(self):
+        self.running = True
         self.thread.start()
+
+    def stop(self):
+        self.running = False
+        self.thread.join()
