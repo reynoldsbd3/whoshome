@@ -18,7 +18,7 @@ class NetworkScanner():
 
     def __init__(self, name = "NetworkScanner"):
         self.name = name
-        
+
         self.local_net = config.local_net
         self.nmap_args = config.nmap_args
         self.timeout = config.timeout
@@ -38,7 +38,7 @@ class NetworkScanner():
 
         nm = PortScanner()
 
-        while 1:
+        while self.running:
 
             # Decrement all hosts
             for mac in self.macs:
@@ -59,7 +59,12 @@ class NetworkScanner():
                     pass
 
     def start(self):
+        self.running = True
         self.thread.start()
+
+    def stop(self):
+        self.running = False
+        self.thread.join()
 
 if __name__ == '__main__':
     print('this is not an executable file')

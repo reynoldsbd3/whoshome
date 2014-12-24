@@ -15,14 +15,14 @@ macs = {'DC:F1:10:B6:69:84' : 'blue',
 
 # Address/netmask for the local subnet to scan. If your local network uses a
 #   different subnet, change this so that nmap scans the proper addresses.
-local_net = '10.128.1.1/16'
+local_net = '192.168.1.1/24'
 
 # Number of consecutive scans that a device must be absent from to be considered
 #   gone from the local network
 timeout = 10
 
 # Args to pass to nmap... shouldn't need to change these
-nmap_args = '-sn -n --host-timeout 2s'
+nmap_args = '-sn -n --host-timeout 4s'
 
 # Colors and GPIO configuration. Also shouldn't change these unless you have a
 #   different hardware configuration. These should be of the form 'color' : pin
