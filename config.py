@@ -26,12 +26,16 @@ nmap_args = '-sn -n --host-timeout 4s'
 
 # Colors and GPIO configuration. Also shouldn't change these unless you have a
 #   different hardware configuration. These should be of the form 'color' : pin
-colors = {'blue' : 0,
-          'red' : 1,
-          'yellow' : 2}
+colors = {'red' : 4,
+          'yellow' : 1,
+          'green' : 2,
+          'blue' : 24}
 
 # Number of seconds between output updates
 update_freq = 3
+
+# Numbering mode for GPIO pins
+gpio_mode = 'bcm'
 
 if __name__ == '__main__':
     print('this is not an executable file')

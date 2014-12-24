@@ -6,8 +6,7 @@
 #   who's on the current network.
 
 import config
-#import RPi.GPIO as GPIO
-GPIO = 'foo'
+from RPi import GPIO
 from threading import Thread
 from time import sleep
 
@@ -24,6 +23,7 @@ class FrameIO():
         for color in config.colors:
             self.colors[color] = False # All lights start off
         self.pin_bindings = config.colors
+        self.gpio_mode = config.gpio_mode
         self.update_freq = config.update_freq
 
         self.thread = Thread(target = self.run)
@@ -73,9 +73,9 @@ class FrameIO():
 
         for color, lit in self.colors.items():
             if lit:
-                print('lighting pin %s' % (self.pin_bindings[color]))
+                GPIO.output(pin_bindings[color], True)
             else:
-                print('turning off pin %s' % (self.pin_bindings[color]))
+                GPIO.output(pin_bindings[color], False)
 
     def start(self):
         self.running = True
