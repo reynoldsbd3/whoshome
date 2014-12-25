@@ -27,13 +27,13 @@ nmap_args = '-sn -n --host-timeout 4s'
 
 # Colors and GPIO configuration. Also shouldn't change these unless you have a
 #   different hardware configuration. These should be of the form 'color' : pin
-colors = {'red' : 4,
-          'yellow' : 17,
-          'green' : 22,
-          'blue' : 5}
+colors = {'red' : 10,
+          'yellow' : 25,
+          'green' : 27,
+          'blue' : 3}
 
 # Pin to be used as switch input
-switch_pin = 25
+switch_pin = 11
 
 # Number of seconds between output updates
 update_freq = 3
