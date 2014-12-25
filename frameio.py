@@ -6,6 +6,7 @@
 #   who's on the current network.
 
 import config
+import os
 from RPi import GPIO
 from threading import Thread
 from time import sleep
@@ -37,9 +38,26 @@ class FrameIO():
     def run(self):
         """Update the light status"""
 
+        switch_held = False
+
         while self.running:
             self.get_colors()
             self.update_colors()
+            if GPIO.input(self.switch_pin):
+                if switch_held:
+                    os.system('shutdown -hP now')
+                    # Flash!
+                    while self.running:
+                        for color, pin in self.pin_bindings.items():
+                            GPIO.output(pin, True)
+                        sleep(1)
+                        for color, pin in self.pin_bindings.items():
+                            GPIO.output(pin, False)
+                        sleep(1)
+                    break
+                else:
+                    # Shutdown next time if still held
+                    switch_held = True
             sleep(self.update_freq)
 
     def init_gpio(self):
