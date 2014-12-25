@@ -23,6 +23,7 @@ class FrameIO():
         for color in config.colors:
             self.colors[color] = False # All lights start off
         self.pin_bindings = config.colors
+        self.switch_pin = config.switch_pin
         self.gpio_mode = config.gpio_mode
         self.update_freq = config.update_freq
 
@@ -30,6 +31,8 @@ class FrameIO():
         self.thread.deamon = True
 
         self.init_gpio()
+
+        self.lights_on = True
 
     def run(self):
         """Update the light status"""
@@ -49,6 +52,9 @@ class FrameIO():
 
         for color, pin in self.pin_bindings.items():
             GPIO.setup(pin, GPIO.OUT)
+
+        GPIO.setup(self.switch_pin, GPIO.IN)
+	GPIO.add_event_detect(self.switch_pin, GPIO.RISING, callback = self.toggle_lights, bouncetime = 200)
 
     def deinit_gpio(self):
         """Make sure pins are off"""
@@ -74,10 +80,15 @@ class FrameIO():
         """Do the work of lighting the actual pins"""
 
         for color, lit in self.colors.items():
-            if lit:
+            if lit and self.lights_on:
                 GPIO.output(self.pin_bindings[color], True)
             else:
                 GPIO.output(self.pin_bindings[color], False)
+
+    def toggle_lights(self, pin):
+        """Toggle whether or not to light LEDs"""
+        print('running callback')
+        self.lights_on = not self.lights_on
 
     def start(self):
         self.running = True

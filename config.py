@@ -11,7 +11,8 @@
 #   colors specified later in this file. These should be of the form
 #   'MAC' : 'color'
 macs = {'DC:F1:10:B6:69:84' : 'blue',
-        '74:D4:35:02:9C:26' : 'red'}
+        '74:D4:35:02:9C:26' : 'red',
+        '94:94:26:22:AA:69' : 'green'}
 
 # Address/netmask for the local subnet to scan. If your local network uses a
 #   different subnet, change this so that nmap scans the proper addresses.
@@ -28,8 +29,11 @@ nmap_args = '-sn -n --host-timeout 4s'
 #   different hardware configuration. These should be of the form 'color' : pin
 colors = {'red' : 4,
           'yellow' : 17,
-          'green' : 27,
-          'blue' : 22}
+          'green' : 22,
+          'blue' : 5}
+
+# Pin to be used as switch input
+switch_pin = 25
 
 # Number of seconds between output updates
 update_freq = 3
